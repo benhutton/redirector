@@ -24,6 +24,9 @@ class RedirectRule < ActiveRecord::Base
     when /mysql/i
       '(redirect_rules.source_is_case_sensitive = :true AND :source REGEXP BINARY redirect_rules.source) OR '+
       '(redirect_rules.source_is_case_sensitive = :false AND :source REGEXP redirect_rules.source)'
+    else
+      logger.warn "WARNING: Database unsupported by redirector. Skipping regex redirect rules"
+      ':false'
     end
   end
 
